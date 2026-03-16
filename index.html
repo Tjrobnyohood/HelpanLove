@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture of Empowerment | OKC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --cyan: #00ffff;
+            --gold: #ffbf00;
+            --white: #ffffff;
+            --card-bg: #151515;
+            --overlay: rgba(10, 10, 10, 0.95);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Geometric Grid Background */
+        .geometry-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        header {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            text-transform: uppercase;
+            color: var(--cyan);
+            line-height: 0.9;
+            text-shadow: 6px 6px 0px var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .hero-sub {
+            letter-spacing: 5px;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        section {
+            max-width: 1100px;
+            margin: 100px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            border-left: 10px solid var(--cyan);
+            padding-left: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Prism Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .prism-card {
+            background: var(--card-bg);
+            border: 2px solid var(--white);
+            padding: 40px;
+            position: relative;
+            box-shadow: 10px 10px 0px var(--cyan);
+            transition: 0.3s ease-in-out;
+        }
+
+        .prism-card:hover {
+            transform: translate(-10px, -10px);
+            box-shadow: 20px 20px 0px var(--gold);
+            border-color: var(--gold);
+        }
+
+        .icon-box {
+            height: 80px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .floating-svg {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(4px 4px 0px rgba(0, 255, 255, 0.5));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .card-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            color: var(--cyan);
+            margin-bottom: 15px;
+        }
+
+        /* Needs Section */
+        .needs-section {
+            background: var(--gold);
+            color: var(--bg);
+            padding: 60px;
+            box-shadow: 15px 15px 0px var(--cyan);
+        }
+
+        .needs-list { list-style: none; margin: 30px 0; }
+        .needs-list li {
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 15px 0;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--bg);
+            color: var(--gold);
+            padding: 20px 40px;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: var(--white); color: var(--bg); }
+
+        /* MODAL ARCHITECTURE */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--overlay);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 3px solid var(--cyan);
+            padding: 50px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 20px 20px 0px var(--gold);
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .modal-form input, .modal-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: transparent;
+            border: 1px solid var(--white);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .modal-form input:focus { outline: 2px solid var(--cyan); }
+
+        footer { text-align: center; padding: 80px 20px; opacity: 0.4; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="geometry-bg"></div>
+
+    <header>
+        <p class="hero-sub">Oklahoma City Project</p>
+        <h1>Structural<br>Empowerment</h1>
+        <p style="max-width: 500px; margin-top: 20px;">We provide the geometry. They build the life. A startup movement for self-sufficiency.</p>
+    </header>
+
+    <section id="what-we-do">
+        <h2>What We Do</h2>
+        <div class="grid">
+            <div class="prism-card">
+                <div class="icon-box">
+                    <svg class="floating-svg" viewBox="0 0 100 100">
+                        <polygon points="50,5 95,80 5,80" fill="none" stroke="#00ffff" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="card-title">Skill Architecture</div>
+                <p>Training OKC residents in modern vocations that offer long-term stability.</p>
+            </div>
+            <div class="prism-card">
+                <div class="icon-box">
+                    <svg class="floating-svg" viewBox="0 0 100 100" style="animation-delay: 1s;">
+                        <rect x="20" y="20" width="60" height="60" fill="none" stroke="#00ffff" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="card-title">Fiscal Geometry</div>
+                <p>Establishing financial frameworks that turn income into generational wealth.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="needs">
+        <div class="needs-section">
+            <h2>Critical Needs</h2>
+            <ul class="needs-list">
+                <li><span>Initial Seed Capital</span> <span>$150,000</span></li>
+                <li><span>Central OKC Training Space</span> <span>Partnership</span></li>
+            </ul>
+            <button class="btn" onclick="openModal()">Structure Your Investment</button>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 style="border-left: none; padding-left: 0; color: var(--gold);">Investment Inquiry</h2>
+            <p style="margin-bottom: 30px;">Help us build the foundations of OKC. Let us know how you'd like to help.</p>
+            
+            <form class="modal-form">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <textarea rows="4" placeholder="How would you like to contribute? (Capital, Space, Mentorship)"></textarea>
+                <button type="submit" class="btn" style="width: 100%;">Submit Inquiry</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 HelpanLove OKC | Architecture of Empowerment</footer>
+
+    <script>
+        const modal = document.getElementById('contactModal');
+
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Close if user clicks outside the box
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
+
