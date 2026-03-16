@@ -12,7 +12,6 @@
             --gold: #ffbf00;
             --white: #ffffff;
             --card-bg: #151515;
-            --overlay: rgba(10, 10, 10, 0.95);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,7 +35,7 @@
         }
 
         header {
-            height: 80vh;
+            height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -99,6 +98,7 @@
             border-color: var(--gold);
         }
 
+        /* The Floating Icon logic */
         .icon-box {
             height: 80px;
             margin-bottom: 20px;
@@ -125,7 +125,7 @@
             margin-bottom: 15px;
         }
 
-        /* Needs Section */
+        /* Needs Box - High Contrast */
         .needs-section {
             background: var(--gold);
             color: var(--bg);
@@ -133,7 +133,16 @@
             box-shadow: 15px 15px 0px var(--cyan);
         }
 
-        .needs-list { list-style: none; margin: 30px 0; }
+        .needs-section h2 {
+            border-color: var(--bg);
+            margin-top: 0;
+        }
+
+        .needs-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+
         .needs-list li {
             font-size: 1.2rem;
             font-weight: 600;
@@ -152,63 +161,21 @@
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
             letter-spacing: 2px;
-            cursor: pointer;
-            border: none;
+            margin-top: 20px;
             transition: 0.3s;
         }
 
-        .btn:hover { background: var(--white); color: var(--bg); }
-
-        /* MODAL ARCHITECTURE */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--overlay);
-            display: none; /* Hidden by default */
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
+        .btn:hover {
+            background: var(--white);
+            color: var(--bg);
         }
 
-        .modal-content {
-            background: var(--card-bg);
-            border: 3px solid var(--cyan);
-            padding: 50px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 20px 20px 0px var(--gold);
-            position: relative;
-            animation: slideIn 0.5s ease;
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            opacity: 0.4;
+            font-size: 0.8rem;
         }
-
-        @keyframes slideIn {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: var(--white);
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        .modal-form input, .modal-form textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            background: transparent;
-            border: 1px solid var(--white);
-            color: var(--white);
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .modal-form input:focus { outline: 2px solid var(--cyan); }
-
-        footer { text-align: center; padding: 80px 20px; opacity: 0.4; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -221,6 +188,13 @@
         <p style="max-width: 500px; margin-top: 20px;">We provide the geometry. They build the life. A startup movement for self-sufficiency.</p>
     </header>
 
+    <section id="who-we-are">
+        <h2>Who We Are</h2>
+        <div class="prism-card">
+            <p>HelpanLove is an OKC-based startup group dedicated to "helping people help themselves." We view community growth as a series of connected geometric blocks. When the foundation is mathematically sound, the structure—the human life—becomes unbreakable.</p>
+        </div>
+    </section>
+
     <section id="what-we-do">
         <h2>What We Do</h2>
         <div class="grid">
@@ -231,8 +205,9 @@
                     </svg>
                 </div>
                 <div class="card-title">Skill Architecture</div>
-                <p>Training OKC residents in modern vocations that offer long-term stability.</p>
+                <p>Training OKC residents in modern vocations that offer long-term stability and growth paths.</p>
             </div>
+
             <div class="prism-card">
                 <div class="icon-box">
                     <svg class="floating-svg" viewBox="0 0 100 100" style="animation-delay: 1s;">
@@ -240,7 +215,17 @@
                     </svg>
                 </div>
                 <div class="card-title">Fiscal Geometry</div>
-                <p>Establishing financial frameworks that turn income into generational wealth.</p>
+                <p>Establishing financial literacy frameworks that turn income into generational wealth.</p>
+            </div>
+
+            <div class="prism-card">
+                <div class="icon-box">
+                    <svg class="floating-svg" viewBox="0 0 100 100" style="animation-delay: 2s;">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#00ffff" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="card-title">Community Nodes</div>
+                <p>Creating a network of graduates who mentor the next wave of participants, ensuring 100% local support.</p>
             </div>
         </div>
     </section>
@@ -248,50 +233,19 @@
     <section id="needs">
         <div class="needs-section">
             <h2>Critical Needs</h2>
+            <p>To finalize our structural launch, we are seeking partners for:</p>
             <ul class="needs-list">
                 <li><span>Initial Seed Capital</span> <span>$150,000</span></li>
                 <li><span>Central OKC Training Space</span> <span>Partnership</span></li>
+                <li><span>Mobile Tech Kits (Hardware)</span> <span>$25,000</span></li>
             </ul>
-            <button class="btn" onclick="openModal()">Structure Your Investment</button>
+            <a href="https://github.com/Tjrobnyohood/HelpanLove" class="btn">View Architecture Repo</a>
         </div>
     </section>
 
-    <div class="modal-overlay" id="contactModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 style="border-left: none; padding-left: 0; color: var(--gold);">Investment Inquiry</h2>
-            <p style="margin-bottom: 30px;">Help us build the foundations of OKC. Let us know how you'd like to help.</p>
-            
-            <form class="modal-form">
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email Address" required>
-                <textarea rows="4" placeholder="How would you like to contribute? (Capital, Space, Mentorship)"></textarea>
-                <button type="submit" class="btn" style="width: 100%;">Submit Inquiry</button>
-            </form>
-        </div>
-    </div>
-
-    <footer>&copy; 2026 HelpanLove OKC | Architecture of Empowerment</footer>
-
-    <script>
-        const modal = document.getElementById('contactModal');
-
-        function openModal() {
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-
-        // Close if user clicks outside the box
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-    </script>
+    <footer>
+        &copy; 2026 HelpanLove OKC | Built on the foundations of Sacred Geometry.
+    </footer>
 
 </body>
 </html>
-
